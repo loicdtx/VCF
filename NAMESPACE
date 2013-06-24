@@ -1,0 +1,2 @@
+export(getCountryList, getPR)
+import(maptools, maps, mapdata, rgeos, sp)
