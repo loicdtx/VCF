@@ -53,7 +53,8 @@ Loic Dutrieux
 \dontrun{
 pr <- getPR('Belize')
 pr
-downloadPR(pr, year=2000, dir=tempdir())
+dir = tempdir()
+downloadPR(pr, year=2000, dir=dir)
 
 }
 
