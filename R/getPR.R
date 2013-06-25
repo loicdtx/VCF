@@ -13,7 +13,7 @@ getPR <- function(country) {
   
   # Perform the Spatial Query'
   x <- wrs2[exts,]
-  list <- list(PR=x$PR, PATH=x$PATH, ROW=x$ROW)
+  list <- list(PR=x$PR, PATH=x$PATH, ROW=x$ROW, map=x)
   return(list)  
 }
 

@@ -20,7 +20,7 @@ character. Usually the name of a country
 Check the \code{\link{getCountryList}} function to get the right spelling for the polygon name you want to use for the query.
 }
 \value{
-A list of path, rows, and PathRows
+A list of path, rows, PathRows, and a spatialPolygon object
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -38,7 +38,13 @@ Loïc Dutrieux
 \code{\link{getCountryList}}, ~~~
 }
 \examples{
-getPR('France')
+pr <- getPR('France')
+pr$PATH
+pr$ROW
+pr$PR
+map('worldHires', 'France', exact=TRUE)
+plot(pr$map, add=TRUE)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
