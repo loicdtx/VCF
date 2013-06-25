@@ -49,7 +49,7 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/
   fun <- function(x, y) {    # Error catching function
     tryReport <- try(dl(x, y))    
     if (inherits(tryReport, 'try-error')) {
-      tryReport <- print(sprintf('Something went wrong with pr %d year %d', x, y))
+      tryReport <- print(sprintf('Something went wrong with pr %s year %d', x, y))
     }
     cat(date(), file=log, sep="\n", append=TRUE)
     cat(tryReport, file=log, sep="\n", append=TRUE)
