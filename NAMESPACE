@@ -1,2 +1,2 @@
-export(getCountryList, getPR)
+export(getCountryList, getPR, downloadPR)
 import(graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp)
