@@ -35,7 +35,7 @@ FIles are downloaded only if they have not been downloaded and written at the sa
 The list of file downloaded, plus eventual warning, or error messages
 }
 \references{
-See \link{http://landcover.org/data/landsatTreecover/}
+See \url{http://landcover.org/data/landsatTreecover/}
 }
 \author{
 Loic Dutrieux
