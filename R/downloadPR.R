@@ -5,11 +5,11 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/
   if (is.list(pr)) { # Assuming the list provided is the variable returned by getPR() function
     pr <- pr$PR
   }
-  pr = sprintf('%06d', pr) # Make the pr individual objects always 6 digits
+  pr <- sprintf('%06d', pr) # Make the pr individual objects always 6 digits
   
-  dir.create(dir, showWarnings = FALSE)
+  dir.create(dir, showWarnings = FALSE, recursive=TRUE)
   if(is.null(log)) {
-    log = sprintf('%s/downloadVCF.log', dir)
+    log <- sprintf('%sdownloadVCF.log', dir)
   }
   cat(date(), file=log, sep="\n") #First line of the log file
   
