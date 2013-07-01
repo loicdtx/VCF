@@ -32,10 +32,10 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     if (length(file) == 1) { # What happens normally, if only one file is found
       # Unpack
       if (is.null(dir)) {
-        gunzip(filename=file, remove=FALSE)
+        R.utils::gunzip(filename=file, remove=FALSE)
       } else {
         destname <- sprintf('%s/%s', dir, substr(gz, 1, nchar(gz) - 3))
-        gunzip(filename=file, destname=destname, remove=FALSE)
+        R.utils::gunzip(filename=file, destname=destname, remove=FALSE)
       }
       return(file)
       

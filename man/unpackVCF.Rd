@@ -58,8 +58,8 @@ pr <- getPR('Belize')
 pr
 dir = tempdir()
 downloadPR(pr, year=2000, dir=dir)
-unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('%s/%s',dir,'extract/'))
-list.files(sprintf('%s/%s',dir,'extract/'))
+unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('\%s/\%s',dir,'extract/'))
+list.files(sprintf('\%s/\%s',dir,'extract/'))
 
 }
 }
