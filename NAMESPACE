@@ -1,2 +1,3 @@
-export(getCountryList, getPR, downloadPR)
-import(graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp)
+exportPattern("^[^\\.]")
+import(graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp, parallel)
+importFrom(R.utils, gunzip)

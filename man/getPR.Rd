@@ -18,6 +18,7 @@ character. Usually the name of a country
 }
 \details{
 Check the \code{\link{getCountryList}} function to get the right spelling for the polygon name you want to use for the query.
+It is recommended to detach rgdal package while using this function.
 }
 \value{
 A list of path, rows, PathRows, and a spatialPolygon object
