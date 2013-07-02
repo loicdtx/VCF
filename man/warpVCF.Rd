@@ -1,0 +1,84 @@
+\name{warpVCF}
+\alias{warpVCF}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Warping utility
+}
+\description{
+Warps (mosaic, reproject, resample), raster files to a projection set by the user. The function works by calling \code{gdalwarp}, which needs to be installed on the system.
+}
+\usage{
+warpVCF(x, t_srs, nodata, filename, res = 30, method = "bilinear", mc.cores = 1, run = TRUE, ...)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{x}{
+character or list of character, the filenames of files to be warpped. The list can easily be retrieved using a call such as \code{list.files('/path/to/data/', full.names=TRUE)}
+}
+  \item{t_srs}{
+character. proj4 expression of the output (\code{filename}) file.
+}
+  \item{nodata}{
+numeric. Value that should not get interpolated in the resampling. Can take multiple values (i.e.: \code{c(220, 210, 211)})
+}
+  \item{filename}{
+character. filename of the output file, with full path.
+}
+  \item{res}{
+numeric. output resolution.
+}
+  \item{method}{
+character. resampling method. See \url{http://www.gdal.org/gdalwarp.html}
+}
+  \item{mc.cores}{
+Numeric. Only relevant if \code{length(nodata) > 1}. Number of workers.
+}
+  \item{run}{
+logical. should the warping be executed. If set to false, a gdalwarp command string is generated, but not executed.
+}
+  \item{\dots}{
+Extra switches passed to \code{gdalwarp}, see \url{http://www.gdal.org/gdalwarp.html}. 
+}
+}
+\details{
+Requires gdal to be installed on the system, and the the gdal binary folder should be added to the system path. On windows systems, gdal can be install via FWTools or OSGeo4W.
+}
+\value{
+A character, the gdalwarp command. If you inted to copy/past it in a terminal, you can use \code{print()}, with \code{quote=FALSE}.
+}
+\references{
+\url{http://www.gdal.org/gdalwarp.html}
+}
+\author{
+Loic Dutrieux
+}
+\note{
+%%  ~~further notes~~
+}
+
+\section{Warning }{
+For parallel implementation, see warning section of \code{\link{mclapply}}
+}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+}
+\examples{
+\dontrun{
+pr <- getPR('Belize')
+pr
+dir = tempdir()
+downloadPR(pr, year=2000, dir=dir)
+unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('\%s/\%s',dir,'extract/'))
+x <- list.files(sprintf('\%s/\%s',dir,'extract/'), full.names=TRUE)
+filename <- rasterTmpFile()
+warpVCF(x=x, t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename, '-multi')
+a <- raster(filename)
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ gdal }
+\keyword{ landsat }% __ONLY ONE__ keyword per line
