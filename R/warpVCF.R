@@ -6,7 +6,7 @@ warpVCF <- function(x, t_srs, nodata, filename, res=30, method='bilinear', mc.co
     fun <- function(i){
       tmp <- rasterTmpFile()
       tmp <- sprintf('%s.tif', tmp)    
-      r <- raster::raster(i)
+      r <- raster::raster(i) #TODO() this call attaches rgdal, which might be a problem for getPR()
       clean <- function(x) { # replace all nodata provided by 220
         x[x %in% nodata] <- 220
         return(x)
