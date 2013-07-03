@@ -8,7 +8,7 @@ Warping utility
 Warps (mosaic, reproject, resample), raster files to a projection set by the user. The function works by calling \code{gdalwarp}, which needs to be installed on the system.
 }
 \usage{
-warpVCF(x, t_srs, nodata, filename, res = 30, method = "bilinear", mc.cores = 1, run = TRUE, ...)
+warpVCF(x, t_srs, nodata=NULL, filename, res = 30, method = "bilinear", mc.cores = 1, run = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,7 +19,7 @@ character or list of character, the filenames of files to be warpped. The list c
 character. proj4 expression of the output (\code{filename}) file.
 }
   \item{nodata}{
-numeric. Value that should not get interpolated in the resampling. Can take multiple values (i.e.: \code{c(220, 210, 211)})
+numeric. Value that should not get interpolated in the resampling. Can take multiple values (i.e.: \code{c(220, 210, 211)}). No need to specify the nodata value if that one is included in the file header.
 }
   \item{filename}{
 character. filename of the output file, with full path.

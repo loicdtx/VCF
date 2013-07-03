@@ -1,5 +1,8 @@
 # Author: Loïc Dutrieux
 # June 2013
+
+# TODO() Investigate the effect of attaching/detaching rgdal on that function, and ways aroud it
+
 getPR <- function(country) {
   #Get the wrs grid
   data(wrs2) # wrs2
