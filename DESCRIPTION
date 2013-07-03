@@ -1,8 +1,8 @@
 Package: VCF
 Type: Package
 Title: Utilities for working with the Landsat based tree cover data
-Version: 1.2.0
-Date: 2013-07-02
+Version: 1.2.1
+Date: 2013-07-03
 Author: Loic Dutrieux
 Imports: R.utils, raster
 Depends: R (>= 2.0.0), graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp, parallel
