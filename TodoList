@@ -1,0 +1,12 @@
+General:
+
+GetPR:
+- Allow querying using extent object
+- Investigate the effect of attaching/detaching rgdal on that function, and ways aroud it
+
+downloadPR:
+- better document the fact that a list of path/rows can be used instead of the standard object (See mail from Valerio)
+
+warpVCF:
+- Find a way to deal with overlapping areas (first warp without stiching together, then mosaic using mosaic{raster})
+- Intermediary should as much as possible be writted to integer (should be flexible based on the data range)
