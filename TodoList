@@ -1,4 +1,5 @@
 General:
+- Warping utilities can accommodate 2 functions for different ways of doing
 
 GetPR:
 - Allow querying using extent object
@@ -7,6 +8,6 @@ downloadPR:
 - better document the fact that a list of path/rows can be used instead of the standard object (See mail from Valerio)
 
 warpVCF:
-- Find a way to deal with overlapping areas (first warp without stiching together, then mosaic using mosaic{raster})
-- Intermediary should as much as possible be writted to integer (should be flexible based on the data range)
+- Find a way to deal with overlapping areas (first warp without stitching together, then mosaic using mosaic{raster})
+- Intermediary should as much as possible be written to integer (should be flexible based on the data range)
 
