@@ -13,3 +13,7 @@ warpVCF:
 - Find a way to deal with overlapping areas (first warp without stitching together, then mosaic using mosaic{raster})
 - Intermediary should as much as possible be written to integer (should be flexible based on the data range)
 
+warp:
+- Document the function
+- Test and validate the function
+
