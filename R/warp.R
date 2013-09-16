@@ -1,7 +1,7 @@
 # Loic Dutrieux
 # July 2013
 
-warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alpha=TRUE, run=TRUE, ...) {
+warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alpha=FALSE, run=TRUE, ...) {
   
   # Subfunctions
   clean <- function(x) { # replace all nodata provided by NA

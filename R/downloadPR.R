@@ -27,7 +27,7 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/
     
     
     # Build output string
-    filename <- sprintf('%s%s%s', dir, urlP, urlF)
+    filename <- sprintf('%s/%s%s', dir, urlP, urlF)
     dir.create(dirname(filename), showWarnings = FALSE, recursive=TRUE)
     
     # Check whether file does already exist or not

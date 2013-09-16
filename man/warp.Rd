@@ -1,19 +1,19 @@
-\name{warpVCF}
-\alias{warpVCF}
+\name{warp}
+\alias{warp}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Warping utility
+Warp individual scenes to a given projection
 }
 \description{
-Warps (mosaic, reproject, resample), raster files to a projection set by the user. The function works by calling \code{gdalwarp}, which needs to be installed on the system.
+This function allows single scenes to be warped to a given projection. No mosaicking is performed. The function can handle multiple NoData values and can output an alpha layer, which a warped layer containing the NoData values only. 
 }
 \usage{
-warpVCF(x, t_srs, nodata=NULL, filename, res = 30, method = "bilinear", mc.cores = 1, run = TRUE, ...)
+warp(x, t_srs, nodata = NULL, filename, res = 30, method = "bilinear", alpha = FALSE, run = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-character or list of character, the filenames of files to be warpped. The list can easily be retrieved using a call such as \code{list.files('/path/to/data/', full.names=TRUE)}
+Character. The filename of the layer to be warped.
 }
   \item{t_srs}{
 character. proj4 expression of the output (\code{filename}) file.
@@ -30,34 +30,27 @@ numeric. output resolution.
   \item{method}{
 character. resampling method. See \url{http://www.gdal.org/gdalwarp.html}
 }
-  \item{mc.cores}{
-Numeric. Only relevant if \code{length(nodata) > 1}. Number of workers.
+  \item{alpha}{
+Logical. Should an alpha layer be created. Only makes sense in case multiple NoData values are provided.
 }
   \item{run}{
 logical. should the warping be executed. If set to false, a gdalwarp command string is generated, but not executed.
 }
   \item{\dots}{
-Extra switches passed to \code{gdalwarp}, see \url{http://www.gdal.org/gdalwarp.html}. 
-}
+Extra switches passed to \code{gdalwarp}, see \url{http://www.gdal.org/gdalwarp.html}. }
 }
 \details{
 Requires gdal to be installed on the system, and the the gdal binary folder should be added to the system path. On windows systems, gdal can be install via FWTools or OSGeo4W.
+Function behavior is quite different depending on whether single and multiple NoData are provided. \code{gdalwarp}, which is called via a system command does not support multiple NoData values, as a consequence the present function first aggregates all values provided in a single value and does the warping in a second stage.
 }
 \value{
-A character, the gdalwarp command. If you inted to copy/past it in a terminal, you can use \code{print()}, with \code{quote=FALSE}.
-}
+A character, or list of characters, the gdalwarp command(s). If you inted to copy/past it in a terminal, you can use \code{print()}, with \code{quote=FALSE}.}
 \references{
-\url{http://www.gdal.org/gdalwarp.html}
-}
+\url{http://www.gdal.org/gdalwarp.html}}
 \author{
-Loic Dutrieux
-}
+Loic Dutrieux }
 \note{
 %%  ~~further notes~~
-}
-
-\section{Warning }{
-For parallel implementation, see warning section of \code{\link{mclapply}}
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
@@ -74,11 +67,11 @@ downloadPR(pr, year=2000, dir=dir)
 unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('\%s/\%s',dir,'extract/'))
 x <- list.files(sprintf('\%s/\%s',dir,'extract/'), full.names=TRUE)
 filename <- sprintf('\%s.tif', rasterTmpFile())
-warpVCF(x=x, t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename, '-multi')
+warp(x=x[1], t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename, '-multi')
 a <- raster(filename)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ gdal }
-\keyword{ landsat }% __ONLY ONE__ keyword per line
+\keyword{ Landsat }% __ONLY ONE__ keyword per line
