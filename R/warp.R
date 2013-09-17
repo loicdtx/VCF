@@ -29,7 +29,7 @@ warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alp
   # Intermediary steps for various nodata options (NULL, length==1, length>1)  
   if (!is.null(nodata)) {
     if (length(nodata) == 1) {
-      warpArgs <- list(sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs %s -tr %d %d -r %s -srcnodata %d', t_srs, res, res, method, nodata), ..., x, filename)
+      warpArgs <- list(sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs \"%s\" -tr %d %d -r %s -srcnodata %d', t_srs, res, res, method, nodata), ..., x, filename)
     } else if (length(nodata) > 1) {
       r <- raster::raster(x) 
       # An intermediary step is required 
@@ -39,14 +39,14 @@ warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alp
         tmpalpha <- sprintf('%s.tif', tmpalpha)
         alphaName <- sprintf('%s_alpha%s', substr(filename, 1, nchar(filename) - nchar(raster::extension(filename))), raster::extension(filename))
         raster::calc(x=r, fun=x2alpha, filename=tmpalpha, datatype='INT1U')
-        alphaw <- sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs %s -tr %d %d %s %s', t_srs, res, res, tmpalpha, alphaName) #warp string for alpha layer (nearest neighbour)
+        alphaw <- sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs \"%s\" -tr %d %d %s %s', t_srs, res, res, tmpalpha, alphaName) #warp string for alpha layer (nearest neighbour)
       }
       tmp <- fun(r) #tmp is the filename of the file to be warped
-      warpArgs <- list(sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs %s -tr %d %d -r %s', t_srs, res, res, method), ..., tmp, filename)
+      warpArgs <- list(sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs \"%s\" -tr %d %d -r %s', t_srs, res, res, method), ..., tmp, filename)
       
     }
   } else {
-    warpArgs <- list(sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs %s -tr %d %d -r %s', t_srs, res, res, method), ..., x, filename)
+    warpArgs <- list(sprintf('gdalwarp --config GDAL_CACHEMAX 500 -wm 500 -t_srs \"%s\" -tr %d %d -r %s', t_srs, res, res, method), ..., x, filename)
   }
   
   # build warp string
