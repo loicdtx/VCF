@@ -67,7 +67,7 @@ downloadPR(pr, year=2000, dir=dir)
 unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('\%s/\%s',dir,'extract/'))
 x <- list.files(sprintf('\%s/\%s',dir,'extract/'), full.names=TRUE)
 filename <- sprintf('\%s.tif', rasterTmpFile())
-warp(x=x[1], t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename, '-multi')
+warp(x=x[1], t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename)
 a <- raster(filename)
 }
 }

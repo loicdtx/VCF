@@ -53,8 +53,10 @@ warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alp
   w <- paste(warpArgs, collapse=' ')
   if (alpha) {
     return(list(data=w, alpha=alphaw))
+  } else {
+    return(w)
   }
-  return(w)
+  
   
   #run it
   if (run) {
