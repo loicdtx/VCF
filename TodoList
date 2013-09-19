@@ -1,7 +1,6 @@
 General:
 - Warping utilities can accommodate 2 functions for different ways of doing
 - Implement a gap filling module that fills remaining clouds with the MODIS vcf
-- funcion warp() is in progress ... NEEDS debugging
 
 GetPR:
 - Allow querying using extent object
@@ -13,6 +12,4 @@ warpVCF:
 - Find a way to deal with overlapping areas (first warp without stitching together, then mosaic using mosaic{raster})
 - Intermediary should as much as possible be written to integer (should be flexible based on the data range)
 
-warp:
-- Test and validate the function
 

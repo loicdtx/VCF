@@ -18,8 +18,7 @@ warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alp
   
   x2alpha <- function(x) { # Create a tmp
     alphaLayer <- x
-    alphaLayer[] <- NA # There certainly exist a more effective way of creating an empty layer
-    alphaLayer[x %in% nodata] <- x
+    alphaLayer[!(alphaLayer %in% nodata)] <- NA
     return(alphaLayer)
   }
   
@@ -51,11 +50,6 @@ warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alp
   
   # build warp string
   w <- paste(warpArgs, collapse=' ')
-  if (alpha) {
-    return(list(data=w, alpha=alphaw))
-  } else {
-    return(w)
-  }
   
   
   #run it
@@ -65,4 +59,13 @@ warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alp
       system(alphaw)
     }
   }
+  
+  # Return string(s)
+  if (alpha) {
+    return(list(data=w, alpha=alphaw))
+  } else {
+    return(w)
+  }
+  
+  
 }
