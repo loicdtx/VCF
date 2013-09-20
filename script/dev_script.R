@@ -15,13 +15,15 @@ mclapply(X=x, FUN=wrap, mc.cores=3)
 
 x2 <- list.files('/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/', pattern=glob2rx('*warp*'), full.names=TRUE)
 
-# x3 <- sapply(X=x2, FUN=raster)
-# x3$fun <- mean
-# x3$filename <- '/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/Belize_1.tif'
-# 
-# do.call(mosaic, x3)
+x3 <- lapply(X=x2, FUN=raster)
+x3$fun <- mean
+x3$filename <- '/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/Belize_3.tif'
 
-a <- raster(x2[1])
-b <- raster(x2[2])
-c <- raster(x2[3])
-mosaic(a,b,c, fun=mean, filename='/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/Belize_1.tif')
+do.call(raster::mosaic, x3)
+
+# a <- raster(x2[1])
+# b <- raster(x2[2])
+# c <- raster(x2[3])
+# mosaic(a,b,c, fun=mean, filename='/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/Belize_1.tif')
+
+

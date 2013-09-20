@@ -62,13 +62,40 @@ Loic Dutrieux }
 \dontrun{
 pr <- getPR('Belize')
 pr <- pr$PR[1]
-dir = tempdir()
+dir <- tempdir()
 downloadPR(pr, year=2000, dir=dir)
 unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('\%s/\%s',dir,'extract/'))
 x <- list.files(sprintf('\%s/\%s',dir,'extract/'), full.names=TRUE)
 filename <- sprintf('\%s.tif', rasterTmpFile())
 warp(x=x, t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename)
 a <- raster(filename)
+
+# This function is intended to be applied to several scenes, as a way to prepare them before mosaicking
+# The example below performs warping over three files and subsequently mosaic them
+
+pr <- getPR('Belize')
+dir <- tempdir()
+downloadPR(pr, year=2000, dir=dir)
+unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('\%s/\%s',dir,'extract/'))
+x <- list.files(sprintf('\%s/\%s',dir,'extract/'), full.names=TRUE)
+
+wrap <- function(x) {
+  filename <- filename <- sprintf('\%s_warp.tif', x)
+  w <- warp(x=x, t_srs='+proj=laea +lat_0=-10 +lon_0=-70 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs', nodata = c(200, 210, 211, 220), filename=filename)
+  return(w)
+}
+
+mclapply(X=x, FUN=wrap, mc.cores=3)
+
+x2 <- list.files(sprintf('\%s/\%s',dir,'extract/'), pattern=glob2rx('*warp*'), full.names=TRUE)
+
+x3 <- lapply(X=x2, FUN=raster)
+x3$fun <- mean
+x3$filename <- sprintf('\%s/\%s',dir,'extract/mosaic_belize.tif')
+
+do.call(raster::mosaic, x3)
+plot(r <- raster(x3$filename))
+
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
