@@ -3,6 +3,7 @@ General:
 
 GetPR:
 - Allow querying using extent object
+- Does not work in all systems certainly due to some +latlong vs +longlat problem
 
 downloadPR:
 - better document the fact that a list of path/rows can be used instead of the standard object (See mail from Valerio)
