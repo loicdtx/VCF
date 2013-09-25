@@ -7,7 +7,7 @@ getPR <- function(country) {
   
   extm <- map("worldHires", country, plot=FALSE, fill=TRUE, col='transparent', exact=TRUE) #For some reason the fill and col arguments seem to be important ...
   IDs <- sapply(strsplit(extm$names, ":"), function(x) x[1])
-  exts <- map2SpatialPolygons(extm, IDs=IDs, proj4string=CRS("+proj=latlong +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
+  exts <- map2SpatialPolygons(extm, IDs=IDs, proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
 #   if(!identical(proj4string(exts), proj4string(wrs2))) {
 #       exts <- spTransform(exts, CRS(proj4string(wrs2)))
 #   }
