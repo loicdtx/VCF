@@ -26,4 +26,52 @@ do.call(raster::mosaic, x3)
 # c <- raster(x2[3])
 # mosaic(a,b,c, fun=mean, filename='/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/Belize_1.tif')
 
+# cloudFill function
+x <- '/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/p019r047_TC_2000.tif'
+th <- 0.005
+year <- 2000
+ModisDir <- '/media/LP_DUTRIEUX_Data/RS/test/vcf/MODIS/'
+alpha=FALSE
+mask=c(210, 211)
+filename <- '/media/LP_DUTRIEUX_Data/RS/test/vcf/warp/extract/p019r047_TC_2000_cloudFill.tif'
+cloudFill(x=x,th=th, year=year, ModisDir=ModisDir, alpha=alpha, mask=mask, filename=filename, overwrite=TRUE)
+
+
+
+
+a <- c(1:50)
+b <- a*2
+a[11:20] <- 100
+a[(a == 100) == TRUE] <- b
+
+
+r <- raster(ncols=36, nrows=18)
+r[] <- 1:ncell(r)
+s <- raster(ncols=36, nrows=18)
+s[] <- 100
+s[] <- (1:ncell(s))*2
+s[80:300] <- 151
+s[300:600] <- 150
+mask <- c(150,151)
+ss <- s
+ss[ss %in% mask] <- r[ss %in% mask]
+
+
+fun <- function(x,y) {
+    x[x %in% mask] <- y[x %in% mask]
+    return(x)
+}
+sss <- overlay(s, r, fun=fun)
+
+?overlay
+dr <- getValues(r)
+ds <- getValues(s)
+
+dr[1]
+fun(ds, dr)
+
+str(dr)
+
+s[s == 150] <- 100
+
 

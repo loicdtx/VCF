@@ -1,3 +1,3 @@
 exportPattern("^[^\\.]")
-import(graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp, parallel, rgdal, raster)
+import(graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp, parallel, rgdal, raster, MODIS)
 importFrom(R.utils, gunzip)
