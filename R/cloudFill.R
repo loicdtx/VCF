@@ -1,7 +1,7 @@
 # Author: Loic Dutrieux
 # September 2013
 
-cloudFill <- function(x, th, year, ModisDir, alpha=FALSE, mask=c(210, 211), filename) {
+cloudFill <- function(x, th, year, ModisDir, alpha=FALSE, mask=c(210, 211), filename, ...) {
     
     #Functions definition
     fileExists <- function(...) { # Similar to file.exists{base}, but accepts a regular expression ... are mostly for path= and pattern=
@@ -41,13 +41,16 @@ cloudFill <- function(x, th, year, ModisDir, alpha=FALSE, mask=c(210, 211), file
         
         # Warp MOdis2Landsat
         modis30 <- sprintf('%s.tif', rasterTmpFile())
-        warpString <- warpModis2Landsat(target=r, ModisInput=ModisInput, ModisSds=1, filename=modis30) # That function should be able to accept list as ModisInput
+        warpString <- warpModis2Landsat(target=r, ModisInput=modisList, ModisSds=1, filename=modis30) # That function should be able to accept list as ModisInput
         system(warpString)
         
         # Perform values replacements and write directly to file
         modis30 <- raster(modis30)
-        rr <- overlay(r, modis30, fun=function(x,y) {x[x %in% mask] <- y}, filename=filename)
-        # A different version is necessary for the case where alpha is provided
+        if (!is.character(alpha)) {
+            overlay(r, modis30, fun=function(x,y) {x[x %in% mask] <- y[x %in% mask]; return(x)}, filename=filename, datatype='INT1U', ...)
+        } else {
+            overlay(r, modis30, a, fun=function(x,y,z) {x[z %in% mask] <- y[z %in% mask]; return(x)}, filename=filename, datatype='INT1U', ...)
+        }
         
         
         out <- sprintf('cloud filling performed successfully for input file %s \n output writen to %s', x, filename)

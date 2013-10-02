@@ -25,7 +25,7 @@ warpModis2Landsat <- function(target, resolution=30, ModisInput, ModisSds, filen
             name <- a$SDS4gdal[ModisSds]
             return(name)
         }
-        listSds <- sapply(X=ModisInput, FUN=fun)
+        ModisInput <- sapply(X=ModisInput, FUN=fun)
         ModisInput <- gsub("\"", "", ModisInput) # Remove the double quotes
     } 
     ModisInput <- paste(ModisInput, collapse=' ')

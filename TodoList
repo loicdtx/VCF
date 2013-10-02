@@ -1,5 +1,5 @@
 General:
-- Implement a gap filling module that fills remaining clouds with the MODIS vcf
+
 
 GetPR:
 - Allow querying using extent object
