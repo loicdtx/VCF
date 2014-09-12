@@ -5,5 +5,5 @@ R package to facilitate handling (download, cleaning, mosaicking, etc) of the La
 ## Install the package
 ```
 library(devtools)
-install_github('dutri001/vcf)
+install_github('dutri001/vcf')
 ```
