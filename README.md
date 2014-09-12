@@ -1,0 +1,9 @@
+# VCF package
+
+R package to facilitate handling (download, cleaning, mosaicking, etc) of the Landsat based tree cover dataset [link](http://landcover.org/data/landsatTreecover/)
+
+## Install the package
+```
+library(devtools)
+install_github('dutri001/vcf)
+```
