@@ -1,5 +1,15 @@
-# Author: Loic Dutrieux
-# September 2013
+#'
+#' Reprojects MODIS data using target proj and extent
+#' @description Creates a character to be used in a system call, or directly in a terminal; and perform reprojection/resampling/subsetting of MODIS data, using proj and extent from a second raster.
+#' @param target Character. Target raster filename. Full path. Can Also be a list of characters.
+#' @param resolution Numeric, resolution to resample to.
+#' @param ModisInput Character. Input modis file.
+#' @param ModisSds Numeric If \code{ModisInput} is a hdf file, the subdataset number of the data.
+#' @param filename Character. Filename of the resulting output file. Full path.
+#' @return Character string of a gdalwarp expression. Before copy-pasting it in a terminal, you may need to print it using quote=FALSE.
+#' @author Loic Dutrieux
+#' @import raster
+
 
 warpModis2Landsat <- function(target, resolution=30, ModisInput, ModisSds, filename) {
     

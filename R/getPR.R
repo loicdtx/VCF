@@ -1,6 +1,35 @@
 # Author: Loïc Dutrieux
 # June 2013
 
+
+
+
+
+#' Query Landsat wrs2 grid by country name
+#' 
+#' Performs a spatial query on the wrs2 grid using the worldHires dataset.
+#' 
+#' Check the \code{\link{getCountryList}} function to get the right spelling
+#' for the polygon name you want to use for the query.
+#' 
+#' @param country character. Usually the name of a country
+#' @return A list of path, rows, PathRows, and a spatialPolygon object
+#' @note %% ~~further notes~~
+#' @author Loïc Dutrieux
+#' @seealso \code{\link{getCountryList}}, ~~~
+#' @references %% ~put references to the literature/web site here ~
+#' @keywords worldHires Landsat
+#' @examples
+#' 
+#' pr <- getPR('France')
+#' pr$PATH
+#' pr$ROW
+#' pr$PR
+#' map('worldHires', 'France', exact=TRUE)
+#' plot(pr$map, add=TRUE)
+#' 
+#' 
+#' @export getPR
 getPR <- function(country) {
   #Get the wrs grid
   data(wrs2) # wrs2
