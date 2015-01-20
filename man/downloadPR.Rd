@@ -30,10 +30,7 @@ and recreates the directory organization of the ftp server locally.
 }
 \details{
 FIles are downloaded only if they have not been downloaded and written at
-the same location earlier.
-}
-\note{
-%% ~~further notes~~
+the same location earlier. (Performs some sort of updating of a local archive)
 }
 \examples{
 \dontrun{
@@ -49,9 +46,6 @@ Loic Dutrieux
 }
 \references{
 See \url{http://landcover.org/data/landsatTreecover/}
-}
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \keyword{Landsat}
 \keyword{Tree}

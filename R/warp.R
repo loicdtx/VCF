@@ -1,20 +1,14 @@
-# Loic Dutrieux
-# July 2013
-
-
-
-
 
 #' Warp individual scenes to a given projection
 #' 
-#' This function allows single scenes to be warped to a given projection. No
+#' @description This function allows single scenes to be warped to a given projection. No
 #' mosaicking is performed. The function can handle multiple NoData values and
 #' can output an alpha layer, which a warped layer containing the NoData values
 #' only.
 #' 
-#' Requires gdal to be installed on the system, and the the gdal binary folder
-#' should be added to the system path. On windows systems, gdal can be install
-#' via FWTools or OSGeo4W. Function behavior is quite different depending on
+#' @details Requires gdal to be installed on the system, and the the gdal binary folder
+#' should be added to the system path. On windows systems, gdal can be installed
+#' via FWTools, OSGeo4W or QGIS. Function behavior is quite different depending on
 #' whether single and multiple NoData are provided. \code{gdalwarp}, which is
 #' called via a system command does not support multiple NoData values, as a
 #' consequence the present function first aggregates all values provided in a
@@ -40,9 +34,7 @@
 #' @return A character, or list of characters, the gdalwarp command(s). If you
 #' inted to copy/past it in a terminal, you can use \code{print()}, with
 #' \code{quote=FALSE}.
-#' @note %% ~~further notes~~
 #' @author Loic Dutrieux
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
 #' @references \url{http://www.gdal.org/gdalwarp.html}
 #' @keywords gdal Landsat
 #' @examples
@@ -87,6 +79,11 @@
 #' }
 #' 
 #' @export warp
+#' 
+#' @import raster
+#' @import rgdal
+#' 
+
 warp <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', alpha=FALSE, run=TRUE, ...) {
   
   # Subfunctions

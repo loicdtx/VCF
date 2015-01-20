@@ -46,10 +46,7 @@ installed on the system.
 \details{
 Requires gdal to be installed on the system, and the the gdal binary folder
 should be added to the system path. On windows systems, gdal can be install
-via FWTools or OSGeo4W.
-}
-\note{
-%% ~~further notes~~
+via FWTools, OSGeo4W or QGIS.
 }
 \section{Warning }{
  For parallel implementation, see warning section of
@@ -73,9 +70,6 @@ Loic Dutrieux
 }
 \references{
 \url{http://www.gdal.org/gdalwarp.html}
-}
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \keyword{gdal}
 \keyword{landsat}

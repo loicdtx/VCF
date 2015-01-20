@@ -10,13 +10,13 @@
 
 #' Warping utility
 #' 
-#' Warps (mosaic, reproject, resample), raster files to a projection set by the
+#' @description Warps (mosaic, reproject, resample), raster files to a projection set by the
 #' user. The function works by calling \code{gdalwarp}, which needs to be
 #' installed on the system.
 #' 
-#' Requires gdal to be installed on the system, and the the gdal binary folder
+#' @details Requires gdal to be installed on the system, and the the gdal binary folder
 #' should be added to the system path. On windows systems, gdal can be install
-#' via FWTools or OSGeo4W.
+#' via FWTools, OSGeo4W or QGIS.
 #' 
 #' @param x character or list of character, the filenames of files to be
 #' warpped. The list can easily be retrieved using a call such as
@@ -38,11 +38,9 @@
 #' \url{http://www.gdal.org/gdalwarp.html}.
 #' @return A character, the gdalwarp command. If you inted to copy/past it in a
 #' terminal, you can use \code{print()}, with \code{quote=FALSE}.
-#' @note %% ~~further notes~~
 #' @section Warning : For parallel implementation, see warning section of
 #' \code{\link{mclapply}}
 #' @author Loic Dutrieux
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
 #' @references \url{http://www.gdal.org/gdalwarp.html}
 #' @keywords gdal landsat
 #' @examples
@@ -60,6 +58,10 @@
 #' }
 #' 
 #' @export warpVCF
+#' 
+#' @import raster
+#' @import parallel
+#' 
 warpVCF <- function(x, t_srs, nodata=NULL, filename, res=30, method='bilinear', mc.cores=1, run=TRUE, ...) {
   # x is a list of characters (the filenames)
   

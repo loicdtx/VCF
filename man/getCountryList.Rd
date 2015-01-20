@@ -20,9 +20,6 @@ identifying the polygon name to use in the query.
 The first letter of polygon names is often capitalized in the worldHires
 dataset.
 }
-\note{
-%% ~~further notes~~
-}
 \examples{
 # PLot Texel island (an island on the coast of the Netherlands)
 list <- getCountryList('Netherlands')
@@ -31,9 +28,6 @@ map('worldHires', list[7], exact=TRUE, fill=TRUE)
 }
 \author{
 Loïc Dutrieux
-}
-\references{
-%% ~put references to the literature/web site here ~
 }
 \seealso{
 \code{\link{getPR}}

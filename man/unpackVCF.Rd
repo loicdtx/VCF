@@ -26,12 +26,6 @@ A list of filenames and potential warning/error messages
 Recursively searches through the directories and unpack the queried
 archives.
 }
-\details{
-%
-}
-\note{
-%% ~~further notes~~
-}
 \section{Warning }{
  For parallel implementation, see warning section of
 \code{\link{mclapply}}
@@ -49,12 +43,6 @@ list.files(sprintf('\%s/\%s',dir,'extract/'))
 }
 \author{
 Loic Dutrieux
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \keyword{.gz}
 \keyword{Landsat}

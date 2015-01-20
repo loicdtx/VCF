@@ -1,11 +1,11 @@
 #' Automatic download of vcf data from a list of pathrows
 #' 
-#' Automates the download of Landsat based vcf products from the ftp server,
+#' @description Automates the download of Landsat based vcf products from the ftp server,
 #' from a list of list of pathrows. Writes status of the download to a log file
 #' and recreates the directory organization of the ftp server locally.
 #' 
-#' FIles are downloaded only if they have not been downloaded and written at
-#' the same location earlier.
+#' @details FIles are downloaded only if they have not been downloaded and written at
+#' the same location earlier. (Performs some sort of updating of a local archive)
 #' 
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
@@ -16,9 +16,7 @@
 #' @param baseURL character.
 #' @return The list of file downloaded, plus eventual warning, or error
 #' messages
-#' @note %% ~~further notes~~
 #' @author Loic Dutrieux
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
 #' @references See \url{http://landcover.org/data/landsatTreecover/}
 #' @keywords Tree cover Landsat
 #' @examples

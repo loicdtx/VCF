@@ -1,16 +1,9 @@
-# Author: Loic Dutrieux
-# July 2013
-
-
-
-
 
 #' Uncompress the .gz archives of the vcf data
 #' 
-#' Recursively searches through the directories and unpack the queried
+#' @description Recursively searches through the directories and unpack the queried
 #' archives.
 #' 
-#' %
 #' 
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
@@ -21,12 +14,9 @@
 #' provided, all data are unpacked in that directory.
 #' @param mc.cores numeric. For parallel implementation, number of workers.
 #' @return A list of filenames and potential warning/error messages
-#' @note %% ~~further notes~~
 #' @section Warning : For parallel implementation, see warning section of
 #' \code{\link{mclapply}}
 #' @author Loic Dutrieux
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references %% ~put references to the literature/web site here ~
 #' @keywords Landsat .gz
 #' @examples
 #' 
@@ -41,6 +31,11 @@
 #' }
 #' 
 #' @export unpackVCF
+#' 
+#' @import R.utils
+#' @import parallel
+#' 
+
 unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
   # dir if NULL (defualt), archives are unpacked in the directory containing the archive, else in that specified directory

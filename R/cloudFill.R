@@ -44,6 +44,9 @@
 #' }
 #' 
 #' @export cloudFill
+#' 
+#' @import MODIS
+
 cloudFill <- function(x, th, year, ModisDir, alpha=FALSE, mask=c(210, 211), filename, ...) {
     
     #Functions definition

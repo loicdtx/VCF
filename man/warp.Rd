@@ -46,15 +46,12 @@ only.
 }
 \details{
 Requires gdal to be installed on the system, and the the gdal binary folder
-should be added to the system path. On windows systems, gdal can be install
-via FWTools or OSGeo4W. Function behavior is quite different depending on
+should be added to the system path. On windows systems, gdal can be installed
+via FWTools, OSGeo4W or QGIS. Function behavior is quite different depending on
 whether single and multiple NoData are provided. \code{gdalwarp}, which is
 called via a system command does not support multiple NoData values, as a
 consequence the present function first aggregates all values provided in a
 single value and does the warping in a second stage.
-}
-\note{
-%% ~~further notes~~
 }
 \examples{
 \dontrun{
@@ -101,9 +98,6 @@ Loic Dutrieux
 }
 \references{
 \url{http://www.gdal.org/gdalwarp.html}
-}
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \keyword{Landsat}
 \keyword{gdal}

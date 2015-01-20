@@ -18,9 +18,6 @@ Performs a spatial query on the wrs2 grid using the worldHires dataset.
 Check the \code{\link{getCountryList}} function to get the right spelling
 for the polygon name you want to use for the query.
 }
-\note{
-%% ~~further notes~~
-}
 \examples{
 pr <- getPR('France')
 pr$PATH
@@ -32,11 +29,8 @@ plot(pr$map, add=TRUE)
 \author{
 Loïc Dutrieux
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-\code{\link{getCountryList}}, ~~~
+\code{\link{getCountryList}}
 }
 \keyword{Landsat}
 \keyword{worldHires}
