@@ -1,5 +1,37 @@
-# Author: Loic Dutrieux
-# June 2013
+#' Automatic download of vcf data from a list of pathrows
+#' 
+#' @description Automates the download of Landsat based vcf products from the ftp server,
+#' from a list of list of pathrows. Writes status of the download to a log file
+#' and recreates the directory organization of the ftp server locally.
+#' 
+#' @details FIles are downloaded only if they have not been downloaded and written at
+#' the same location earlier. (Performs some sort of updating of a local archive)
+#' 
+#' @param pr List or numeric list. Classically the returned object from
+#' \code{\link{getPR}}.
+#' @param year Numeric or list (i.e.: c(2000, 2005))
+#' @param dir Character. Directory where to write the downloaded data.
+#' @param log character. filename of the logfile. If NULL (default), a file
+#' 'downloadVCF.log' is created at the root of \code{dir}
+#' @param baseURL character.
+#' @return The list of file downloaded, plus eventual warning, or error
+#' messages
+#' @author Loic Dutrieux
+#' @references See \url{http://landcover.org/data/landsatTreecover/}
+#' @keywords Tree cover Landsat
+#' @examples
+#' 
+#' \dontrun{
+#' pr <- getPR('Belize')
+#' pr
+#' dir = tempdir()
+#' downloadPR(pr, year=2000, dir=dir)
+#' 
+#' }
+#' 
+#' 
+#' @export downloadPR
+
 downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/') {
   
   if (is.list(pr)) { # Assuming the list provided is the variable returned by getPR() function

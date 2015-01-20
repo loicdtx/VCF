@@ -1,11 +1,28 @@
 Package: VCF
 Type: Package
 Title: Utilities for working with the Landsat based tree cover data
-Version: 1.3.0
-Date: 2013-07-03
+Version: 1.4.0
+Date: 2015-01-20
 Author: Loic Dutrieux
-Imports: R.utils
-Depends: R (>= 2.0.0), graphics, stats, utils, grDevices, maptools, maps, mapdata, rgeos, sp, parallel, rgdal, raster, MODIS
-Maintainer: Who to complain to <loic.dutrieux@wur.nl>
-Description: Package for easy handling of Landsat based VCF (Vegetation Continuous Fields) data. Includes utilities for querying Path Rows, automate downloading and pre-processing.
+Imports:
+    R.utils
+Depends:
+    R (>= 3.0.0),
+    graphics,
+    stats,
+    utils,
+    grDevices,
+    maptools,
+    maps,
+    mapdata,
+    rgeos,
+    sp,
+    parallel,
+    rgdal,
+    raster,
+    MODIS
+Maintainer: Loic Dutrieux <loic.dutrieux@wur.nl>
+Description: Package for easy handling of Landsat based VCF (Vegetation
+    Continuous Fields) data. Includes utilities for querying Path Rows,
+    automate downloading and pre-processing.
 License: tbd

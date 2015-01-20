@@ -1,5 +1,51 @@
-# Author: Loic Dutrieux
-# September 2013
+#' Cloud filling utilities
+#' 
+#' @description Uses the MODIS VCF product to fill the remaining cloud gaps in the Landsat
+#' VCF product. The function takes care of downloading the MODIS data, in case
+#' they are not present locally.
+#' 
+#' 
+#' @param x Character. Filename of a raster layer.
+#' @param th Numeric. The gap percentage threshold [0,1] above which gap
+#' filling will be performed
+#' @param year Numeric. Year of the data
+#' @param ModisDir Character. Directory where the MODIS VCF data are stored, or
+#' will be downloaded to.
+#' @param alpha Logical or character. If an alpha layer (providing location of
+#' the gaps) is to be used, \code{alpha} is the filename of that raster layer.
+#' @param mask Numeric. Value(s) to be masked.
+#' @param filename Character. Output filename.
+#' @param \dots Additional arguments as for \code{\link{writeRaster}}
+#'
+#' @author Loic Dutrieux
+#' 
+#' 
+#' \dontrun{
+#' pr <- getPR('Belize')
+#' pr <- pr$PR[1]
+#' dir = tempdir()
+#' downloadPR(pr, year=2000, dir=dir)
+#' unpackVCF(pr=pr, year=2000, searchDir=dir, dir=sprintf('%s/%s',dir,'extract/'))
+#' x <- list.files(sprintf('%s/%s',dir,'extract/'))
+#' 
+#' filename <- sprintf('%s.tif', rasterTmpFile())
+#' ModisDir <- tempdir()
+#' 
+#' cloudFill(x=x, th=0.005, ModisDir=ModisDir, filename=filename)
+#' 
+#' #Visualize the output
+#' r0 <- raster(x)
+#' x[x > 100] <- NA
+#' plot(r0)
+#' plot(r1 <- raster(filename), add=TRUE)
+#' 
+#' 
+#' 
+#' }
+#' 
+#' @export cloudFill
+#' 
+#' @import MODIS
 
 cloudFill <- function(x, th, year, ModisDir, alpha=FALSE, mask=c(210, 211), filename, ...) {
     
