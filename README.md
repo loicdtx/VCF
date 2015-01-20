@@ -7,3 +7,8 @@ R package to facilitate handling (download, cleaning, mosaicking, etc) of the La
 library(devtools)
 install_github('dutri001/VCF')
 ```
+
+News:
+
+1.4.0 (2015-01-20)
+- `getPR` now supports SP objects as location input
