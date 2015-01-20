@@ -12,4 +12,3 @@ News:
 
 1.4.0 (2015-01-20)
 - `getPR` now supports SP objects as location input
->>>>>>> dev
