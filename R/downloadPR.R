@@ -29,11 +29,24 @@
 #' 
 #' }
 #' 
-#' 
+#' ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/
 #' @export downloadPR
 
-downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/') {
-  
+dir <- 'data/'
+pr <- getPR('Belize')
+year <- 2005
+
+downloadPR <- function(pr, year, dir, log=NULL, baseURL = baseURL) {
+    
+    if(year == 2000|2005) {
+        baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/'
+    } else if(year == 1990) {
+        year <- 19902000
+        baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatFCC/WRS2/'
+    } else {
+        stop(year, " is not a valid year range")
+    }
+    
   if (is.list(pr)) { # Assuming the list provided is the variable returned by getPR() function
     pr <- pr$PR
   }
@@ -53,10 +66,15 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/
     # Build URL
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    urlP <- sprintf('p%s/r%s/p%sr%s_TC_%d/', p, r, p, r, y) #Path part of the url
-    urlF <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y) # Filename part of the url
-    url <- sprintf('%s%s%s', baseURL, urlP, urlF)
-    
+    if(year == 2000|2005){
+        urlP <- sprintf('p%s/r%s/p%sr%s_TC_%d/', p, r, p, r, y) #Path part of the url
+        urlF <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y) # Filename part of the url
+        url <- sprintf('%s%s%s', baseURL, urlP, urlF)
+    } else {
+        urlP <- sprintf('p%s/r%s/p%sr%s_FCC_%d/', p, r, p, r, y) #Path part of the url
+        urlF <- sprintf('p%sr%s_FCC_%d_CP.tif.gz', p, r, y) # Filename part of the url
+        url <- sprintf('%s%s%s', baseURL, urlP, urlF)
+    }
     
     # Build output string
     filename <- sprintf('%s/%s%s', dir, urlP, urlF)
@@ -93,3 +111,4 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL='ftp://ftp.glcf.umd.edu/
   }
   
 }
+
