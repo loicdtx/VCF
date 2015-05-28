@@ -35,6 +35,16 @@
 #' @import R.utils
 #' @import parallel
 #' 
+# Unpack VCF data
+
+# Jorn testing
+
+# unpackVCF(pr=pr, year = year, searchDir=dir, dir=sprintf('%s/%s',dir,'extract_sexton/'))
+# x <- list.files(sprintf('%s/%s',dir,'extract_sexton/'), full.names=TRUE)
+
+# Load data into R environment
+# Raster <- raster(x[1])
+# plot(Raster)
 
 unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
@@ -59,10 +69,10 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    if(year == 2000|2005){
+    if(year == 2000| year == 2005){
         gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
     } else {
-        gz <- sprintf('p%sr%s_FCC_%d.tif.gz', p, r, y)
+        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y)
     }
     
     # Search recursively
