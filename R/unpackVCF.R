@@ -59,7 +59,12 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
+    if(year == 2000|2005){
+        gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
+    } else {
+        gz <- sprintf('p%sr%s_FCC_%d.tif.gz', p, r, y)
+    }
+    
     # Search recursively
     file <- list.files(path=searchDir, pattern=gz, full.names=TRUE, recursive=TRUE, include.dirs=FALSE)
     
