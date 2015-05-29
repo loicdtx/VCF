@@ -31,11 +31,11 @@
 #' 
 
 # if (!require(MODIS)) install.packages("MODIS", repos="http://R-Forge.R-project.org")
-# devtools::install_github('dutri001/VCF')
+#devtools::install_github('dutri001/VCF')
 
 
 ### Access package libraries
-# library (VCF)
+#library (VCF)
 
 
 

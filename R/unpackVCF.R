@@ -38,13 +38,13 @@
 # Unpack VCF data
 
 # Jorn testing
-
-# unpackVCF(pr=pr, year = year, searchDir=dir, dir=sprintf('%s/%s',dir,'extract_sexton/'))
-# x <- list.files(sprintf('%s/%s',dir,'extract_sexton/'), full.names=TRUE)
+year = year
+unpackVCF(pr=pr, year = year, searchDir=dir, dir=sprintf('%s/%s',dir,'extract/'))
+x <- list.files(sprintf('%s/%s',dir,'extract/'), full.names=TRUE)
 
 # Load data into R environment
-# Raster <- raster(x[1])
-# plot(Raster)
+Raster <- raster(x[1])
+plot(Raster)
 
 unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
