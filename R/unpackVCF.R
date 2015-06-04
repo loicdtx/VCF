@@ -40,13 +40,8 @@
 # Jorn testing
 year = year
 unpackVCF(pr=pr, year = year, searchDir=dir, dir=sprintf('%s/%s',dir,'extract/'))
-x <- list.files(sprintf('%s/%s',dir,'extract/'), full.names=TRUE)
 
-# Load data into R environment
-Raster <- raster(x[1])
-plot(Raster)
-
-unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
+unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
   # dir if NULL (defualt), archives are unpacked in the directory containing the archive, else in that specified directory
   # root of where the archive are stored
@@ -69,10 +64,16 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    if(year == 2000| year == 2005){
+    if((year == 2000 | year == 2005) & database == "Sexton"){
         gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
+    } else if (year == 1990 & database == "Kim") {
+        year <- 19902000
+        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
+    } else if (year == 2000 & database == "Kim") {
+        year <- 20002005
+        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
     } else {
-        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y)
+        print("error in unpacking")
     }
     
     # Search recursively
@@ -82,10 +83,10 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     if (length(file) == 1) { # What happens normally, if only one file is found
       # Unpack
       if (is.null(dir)) {
-        R.utils::gunzip(filename=file, remove=FALSE)
+        R.utils::gunzip(filename=file, remove=FALSE, skip = T)
       } else {
         destname <- sprintf('%s/%s', dir, substr(gz, 1, nchar(gz) - 3))
-        R.utils::gunzip(filename=file, destname=destname, remove=FALSE)
+        R.utils::gunzip(filename=file, destname=destname, remove=FALSE, skip = T)
       }
       return(file)
       

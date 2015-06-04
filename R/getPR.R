@@ -30,8 +30,8 @@
 #' @import sp
 #' 
 
-# if (!require(MODIS)) install.packages("MODIS", repos="http://R-Forge.R-project.org")
-#devtools::install_github('dutri001/VCF')
+if (!require(MODIS)) install.packages("MODIS", repos="http://R-Forge.R-project.org")
+devtools::install_github('dutri001/VCF')
 
 
 ### Access package libraries
