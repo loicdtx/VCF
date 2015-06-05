@@ -10,6 +10,9 @@
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
 #' @param year Numeric or list (i.e.: c(2000, 2005))
+#' list does not work anymore!!!
+#' @param database: 1 string, FCC(Forest cover change) or TC (tree cover).
+#' FCC refers to data by Kim et al. 2014 and TC refers to data by Sexton et al. 2013
 #' @param dir Character. Directory where to write the downloaded data.
 #' @param log character. filename of the logfile. If NULL (default), a file
 #' 'downloadVCF.log' is created at the root of \code{dir}
@@ -25,7 +28,7 @@
 #' pr <- getPR('Belize')
 #' pr
 #' dir = tempdir()
-#' downloadPR(pr, year=2000, dir=dir)
+#' downloadPR(pr, year=2000, database = "FCC", dir=dir)
 #' 
 #' }
 #' 
@@ -35,7 +38,6 @@
 dir <- 'data/'
 pr <- getPR('Belize')
 year <- 1990
-# database = FCC(Forest cover change) or TC (tree cover)
 database = "FCC"
 
 downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
@@ -49,7 +51,7 @@ downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
         year <- 20002005
         baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatFCC/WRS2/'
     } else {
-        stop(sprintf("%s is not a valid year range or the year %s and %s are not a valid combination", year, year, database ))
+        stop(sprintf("%s is not a valid year range or the year %s and database %s are not a valid combination", year, year, database ))
     }
     
   if (is.list(pr)) { # Assuming the list provided is the variable returned by getPR() function
@@ -97,9 +99,8 @@ downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
         out <- sprintf('%s could not be downloaded', url)
       }
     } else if (file.info(filename)$size == 0){
-        print("file exists, but is 0 bytes, download will be re-attempted")
+        out <- print("file exists, but is 0 bytes, download will start once more")
         a <- download.file(url=url, destfile=filename)
-        out <- print("testing response")
     } else {
         out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))
     }

@@ -8,6 +8,7 @@
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
 #' @param year Numeric or list (i.e.: c(2000, 2005))
+#' list does not work anymore!!!
 #' @param searchDir character. Root directory of where the archive are stored
 #' @param dir character or \code{NULL}, if \code{NULL} (default), data are
 #' unpacked in the directories containing the archive. If a directory is
@@ -35,11 +36,6 @@
 #' @import R.utils
 #' @import parallel
 #' 
-# Unpack VCF data
-
-# Jorn testing
-year = year
-unpackVCF(pr=pr, year = year, searchDir=dir, dir=sprintf('%s/%s',dir,'extract/'))
 
 unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
@@ -73,7 +69,7 @@ unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
         year <- 20002005
         gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
     } else {
-        print("error in unpacking")
+        stop(sprintf("%s is not a valid year range or the year %s and database %s are not a valid combination", year, year, database))
     }
     
     # Search recursively
@@ -83,10 +79,10 @@ unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
     if (length(file) == 1) { # What happens normally, if only one file is found
       # Unpack
       if (is.null(dir)) {
-        R.utils::gunzip(filename=file, remove=FALSE, skip = T)
+        R.utils::gunzip(filename=file, remove=FALSE)
       } else {
         destname <- sprintf('%s/%s', dir, substr(gz, 1, nchar(gz) - 3))
-        R.utils::gunzip(filename=file, destname=destname, remove=FALSE, skip = T)
+        R.utils::gunzip(filename=file, destname=destname, remove=FALSE)
       }
       return(file)
       
