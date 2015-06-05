@@ -64,12 +64,12 @@ unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    if((year == 2000 | year == 2005) & database == "Sexton"){
+    if((year == 2000 | year == 2005) & database == "TC"){
         gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
-    } else if (year == 1990 & database == "Kim") {
+    } else if (year == 1990 & database == "FCC") {
         year <- 19902000
         gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
-    } else if (year == 2000 & database == "Kim") {
+    } else if (year == 2000 & database == "FCC") {
         year <- 20002005
         gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
     } else {

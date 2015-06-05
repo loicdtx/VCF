@@ -35,16 +35,21 @@
 dir <- 'data/'
 pr <- getPR('Belize')
 year <- 1990
+# database = FCC(Forest cover change) or TC (tree cover)
+database = "FCC"
 
-downloadPR <- function(pr, year, dir, log=NULL, baseURL = baseURL) {
+downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
     
-    if(year == 2000|year == 2005) {
+    if((year == 2000|year == 2005) & database == "TC") {
         baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/'
-    } else if(year == 1990) {
+    } else if(year == 1990 & database == "FCC") {
         year <- 19902000
         baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatFCC/WRS2/'
+    } else if(year == 2000 & database == "FCC") {
+        year <- 20002005
+        baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatFCC/WRS2/'
     } else {
-        stop(year, " is not a valid year range")
+        stop(sprintf("%s is not a valid year range or the year %s and %s are not a valid combination", year, year, database ))
     }
     
   if (is.list(pr)) { # Assuming the list provided is the variable returned by getPR() function
@@ -70,7 +75,7 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL = baseURL) {
         urlP <- sprintf('p%s/r%s/p%sr%s_TC_%d/', p, r, p, r, y) #Path part of the url
         urlF <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y) # Filename part of the url
         url <- sprintf('%s%s%s', baseURL, urlP, urlF)
-    } else {
+    } else if (year == 19902000 | year == 20002005) {
         urlP <- sprintf('p%s/r%s/p%sr%s_FCC_%d/', p, r, p, r, y) #Path part of the url
         urlF <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y) # Filename part of the url
         url <- sprintf('%s%s%s', baseURL, urlP, urlF)
@@ -80,6 +85,8 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL = baseURL) {
     filename <- sprintf('%s/%s%s', dir, urlP, urlF)
     dir.create(dirname(filename), showWarnings = FALSE, recursive=TRUE)
     
+    
+    
     # Check whether file does already exist or not
     if (!file.exists(filename)) {
       print(sprintf('Downloading %s', url))
@@ -88,12 +95,17 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL = baseURL) {
         out <- sprintf('%s downloaded successfully', url)
       } else {
         out <- sprintf('%s could not be downloaded', url)
-      }      
+      }
+    } else if (file.info(filename)$size == 0){
+        print("file exists, but is 0 bytes, download will be re-attempted")
+        a <- download.file(url=url, destfile=filename)
+        out <- print("testing response")
     } else {
-      out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))
+        out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))
     }
-    return(out)   
+    return(out)
   }
+ 
   
   
   fun <- function(x, y) {    # Error catching function
