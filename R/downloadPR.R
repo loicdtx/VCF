@@ -27,7 +27,7 @@
 #' pr <- getPR('Belize')
 #' pr
 #' dir = tempdir()
-#' downloadPR(pr, year=2000, database = "FCC", dir=dir)
+#' downloadPR(pr, year=2000, dir=dir)
 #' 
 #' }
 #' 
@@ -78,13 +78,13 @@ downloadPR <- function(pr, year, dir, log=NULL, baseURL = 'ftp://ftp.glcf.umd.ed
       if (a == 0) {
         out <- sprintf('%s downloaded successfully', url)
       } else if (file.info(filename)$size == 0) {
-          out <- print("Something went wrong with downloading, file size == 0 bytes, one more attempt on downloading")
+          out <- print('Something went wrong with downloading, file size == 0 bytes, one more attempt on downloading')
           a <- download.file(url=url, destfile=filename)
       } else {
           out <- sprintf('%s could not be downloaded', url)
       }
     } else if (file.info(filename)$size == 0){
-        out <- print("file exists, but is 0 bytes, download will start again and overwrite previous file")
+        out <- print('file exists, but is 0 bytes, download will start again and overwrite previous file')
         a <- download.file(url=url, destfile=filename)
     } else {
         out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))

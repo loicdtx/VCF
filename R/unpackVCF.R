@@ -63,7 +63,7 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     } else if (year == 19902000 | year == 20002005){
         gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y)
     } else {
-        stop(sprintf("%s is not a valid year range", year, year))
+        stop(sprintf('%s is not a valid year range', year))
     }
     
     # Search recursively

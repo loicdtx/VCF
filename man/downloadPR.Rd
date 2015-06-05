@@ -39,7 +39,7 @@ the same location earlier, the files overwrite previous downloaded files that ar
 pr <- getPR('Belize')
 pr
 dir = tempdir()
-downloadPR(pr, year=2000, database = "FCC", dir=dir)
+downloadPR(pr, year=2000, dir=dir)
 
 }
 }
