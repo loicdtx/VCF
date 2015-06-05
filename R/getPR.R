@@ -28,7 +28,6 @@
 #' @import maptools
 #' @import rgeos
 #' @import sp
-#' 
 
 
 getPR <- function(location) {

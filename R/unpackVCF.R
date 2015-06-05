@@ -7,8 +7,7 @@
 #' 
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
-#' @param year Numeric or list (i.e.: c(2000, 2005))
-#' list does not work anymore!!!
+#' @param year Numeric or list (i.e.: c(2000, 2005) or c(19902000, 20002005))
 #' @param searchDir character. Root directory of where the archive are stored
 #' @param dir character or \code{NULL}, if \code{NULL} (default), data are
 #' unpacked in the directories containing the archive. If a directory is
@@ -35,9 +34,8 @@
 #' 
 #' @import R.utils
 #' @import parallel
-#' 
 
-unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
+unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
   # dir if NULL (defualt), archives are unpacked in the directory containing the archive, else in that specified directory
   # root of where the archive are stored
@@ -60,16 +58,12 @@ unpackVCF <- function(pr, year, database, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    if((year == 2000 | year == 2005) & database == "TC"){
+    if (year == 2000 | year == 2005){
         gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
-    } else if (year == 1990 & database == "FCC") {
-        year <- 19902000
-        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
-    } else if (year == 2000 & database == "FCC") {
-        year <- 20002005
-        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, year)
+    } else if (year == 19902000 | year == 20002005){
+        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y)
     } else {
-        stop(sprintf("%s is not a valid year range or the year %s and database %s are not a valid combination", year, year, database))
+        stop(sprintf("%s is not a valid year range", year, year))
     }
     
     # Search recursively

@@ -4,15 +4,13 @@
 #' from a list of list of pathrows. Writes status of the download to a log file
 #' and recreates the directory organization of the ftp server locally.
 #' 
-#' @details FIles are downloaded only if they have not been downloaded and written at
-#' the same location earlier. (Performs some sort of updating of a local archive)
+#' @details Files are downloaded only if they have not been downloaded and written at
+#' the same location earlier, the files overwrite previous downloaded files that are == 0 bytes.
+#' (Performs some sort of updating of a local archive)
 #' 
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
-#' @param year Numeric or list (i.e.: c(2000, 2005))
-#' list does not work anymore!!!
-#' @param database: 1 string, FCC(Forest cover change) or TC (tree cover).
-#' FCC refers to data by Kim et al. 2014 and TC refers to data by Sexton et al. 2013
+#' @param year Numeric or list (i.e.: c(2000, 2005) or c(19902000, 20002005))
 #' @param dir Character. Directory where to write the downloaded data.
 #' @param log character. filename of the logfile. If NULL (default), a file
 #' 'downloadVCF.log' is created at the root of \code{dir}
@@ -20,8 +18,9 @@
 #' @return The list of file downloaded, plus eventual warning, or error
 #' messages
 #' @author Loic Dutrieux
-#' @references See \url{http://landcover.org/data/landsatTreecover/}
-#' @keywords Tree cover Landsat
+#' @references Land cover: See \url{http://landcover.org/data/landsatTreecover/}
+#' Forest cover change: See \url{http://landcover.org/data/landsatFCC/}
+#' @keywords Tree cover Landsat, Forest cover change Landsat
 #' @examples
 #' 
 #' \dontrun{
@@ -32,28 +31,11 @@
 #' 
 #' }
 #' 
-#' ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/
+#' 
 #' @export downloadPR
 
-dir <- 'data/'
-pr <- getPR('Belize')
-year <- 1990
-database = "FCC"
-
-downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
-    
-    if((year == 2000|year == 2005) & database == "TC") {
-        baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatTreecover/WRS2/'
-    } else if(year == 1990 & database == "FCC") {
-        year <- 19902000
-        baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatFCC/WRS2/'
-    } else if(year == 2000 & database == "FCC") {
-        year <- 20002005
-        baseURL <- 'ftp://ftp.glcf.umd.edu/glcf/LandsatFCC/WRS2/'
-    } else {
-        stop(sprintf("%s is not a valid year range or the year %s and database %s are not a valid combination", year, year, database ))
-    }
-    
+downloadPR <- function(pr, year, dir, log=NULL, baseURL = 'ftp://ftp.glcf.umd.edu/glcf/') {
+ 
   if (is.list(pr)) { # Assuming the list provided is the variable returned by getPR() function
     pr <- pr$PR
   }
@@ -74,11 +56,11 @@ downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
     p <- substr(x,1,3)
     r <- substr(x,4,6)
     if(year == 2000| year == 2005){
-        urlP <- sprintf('p%s/r%s/p%sr%s_TC_%d/', p, r, p, r, y) #Path part of the url
+        urlP <- sprintf('LandsatTreecover/WRS2/p%s/r%s/p%sr%s_TC_%d/', p, r, p, r, y) #Path part of the url
         urlF <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y) # Filename part of the url
         url <- sprintf('%s%s%s', baseURL, urlP, urlF)
     } else if (year == 19902000 | year == 20002005) {
-        urlP <- sprintf('p%s/r%s/p%sr%s_FCC_%d/', p, r, p, r, y) #Path part of the url
+        urlP <- sprintf('LandsatFCC/WRS2/p%s/r%s/p%sr%s_FCC_%d/', p, r, p, r, y) #Path part of the url
         urlF <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y) # Filename part of the url
         url <- sprintf('%s%s%s', baseURL, urlP, urlF)
     }
@@ -95,11 +77,14 @@ downloadPR <- function(pr, year, database, dir, log=NULL, baseURL = baseURL) {
       a <- download.file(url=url, destfile=filename)
       if (a == 0) {
         out <- sprintf('%s downloaded successfully', url)
+      } else if (file.info(filename)$size == 0) {
+          out <- print("Something went wrong with downloading, file size == 0 bytes, one more attempt on downloading")
+          a <- download.file(url=url, destfile=filename)
       } else {
-        out <- sprintf('%s could not be downloaded', url)
+          out <- sprintf('%s could not be downloaded', url)
       }
     } else if (file.info(filename)$size == 0){
-        out <- print("file exists, but is 0 bytes, download will start once more")
+        out <- print("file exists, but is 0 bytes, download will start again and overwrite previous file")
         a <- download.file(url=url, destfile=filename)
     } else {
         out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))
