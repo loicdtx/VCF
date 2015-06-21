@@ -16,6 +16,7 @@
 #' @param log character. filename of the logfile. If NULL (default), a file
 #' 'downloadVCF.log' is created at the root of \code{dir}
 #' @param baseURL character.
+#' @param stubborn Numeric. Number of retries when for a reason or another the download fails
 #' @return The list of file downloaded, plus eventual warning, or error
 #' messages
 #' @author Loic Dutrieux
@@ -35,7 +36,7 @@
 #' 
 #' @export downloadPR
 
-downloadPR <- function(pr, name = 'TC', year, dir, log=NULL, baseURL = 'ftp://ftp.glcf.umd.edu/glcf/') {
+downloadPR <- function(pr, name = 'TC', year, dir, log=NULL, baseURL = 'ftp://ftp.glcf.umd.edu/glcf/', stubborn = 5) {
     
   if(!tolower(name) %in% c('tc', 'fcc')) {
     stop('Product name not supported')
@@ -73,6 +74,7 @@ downloadPR <- function(pr, name = 'TC', year, dir, log=NULL, baseURL = 'ftp://ft
     urlP <- sprintf('%s/WRS2/p%s/r%s/p%sr%s_%s_%d/', prefix, p, r, p, r, name, y) #Path part of the url
     urlF <- sprintf('p%sr%s_%s_%d%s.tif.gz', p, r, name, y, suffix) # Filename part of the url
     url <- sprintf('%s%s%s', baseURL, urlP, urlF)
+   
 
     
     # Build output string
@@ -80,24 +82,28 @@ downloadPR <- function(pr, name = 'TC', year, dir, log=NULL, baseURL = 'ftp://ft
     dir.create(dirname(filename), showWarnings = FALSE, recursive=TRUE)
     
     
-    
     # Check whether file does already exist or not
-    if (!file.exists(filename)) {
-      print(sprintf('Downloading %s', url))
-      a <- download.file(url=url, destfile=filename)
-      if (a == 0) {
-        out <- sprintf('%s downloaded successfully', url)
-      } else if (file.info(filename)$size == 0) {
-          out <- print('Something went wrong with downloading, file size == 0 bytes, one more attempt on downloading')
-          a <- download.file(url=url, destfile=filename)
-      } else {
-          out <- sprintf('%s could not be downloaded', url)
-      }
-    } else if (file.info(filename)$size == 0){
-        out <- print('file exists, but is 0 bytes, download will start again and overwrite previous file')
-        a <- download.file(url=url, destfile=filename)
+    if (file.exists(filename) & !file.info(filename)$size %in% c(0, NA)) { # File exists and has data
+      out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))      
     } else {
-        out <- print(sprintf('File %s already exists, it won\'t be downloaded', basename(filename)))
+      
+      # Prepare download loop
+      size <- 0
+      count <- 0
+      a <- 1
+      while(count <= stubborn | (a == 0 & size != 0)) {
+        count = count + 1
+        print(sprintf('Downloading %s, attempt number %d', url, count))
+        count <- 0
+        a <- download.file(url=url, destfile=filename)
+        size <- file.info(filename)$size
+      }
+        
+      if (a == 0 & size != 0) {
+        out <- sprintf('%s downloaded successfully', url)
+      } else {
+        out <- sprintf('%s could not be downloaded', url)
+      }
     }
     return(out)
   }
