@@ -4,14 +4,16 @@
 \alias{downloadPR}
 \title{Automatic download of vcf data from a list of pathrows}
 \usage{
-downloadPR(pr, year, dir, log = NULL,
-  baseURL = "ftp://ftp.glcf.umd.edu/glcf/")
+downloadPR(pr, name = "TC", year, dir, log = NULL,
+  baseURL = "ftp://ftp.glcf.umd.edu/glcf/", stubborn = 5)
 }
 \arguments{
 \item{pr}{List or numeric list. Classically the returned object from
 \code{\link{getPR}}.}
 
-\item{year}{Numeric or list (i.e.: c(2000, 2005) or c(19902000, 20002005))}
+\item{name}{Character. Product name you wish to download. At the moment \code{'FCC'} and \code{'TC'} can be downloaded.}
+
+\item{year}{Numeric or list. When \code{name = 'TC'}, a single numeric must be provided. A list of numerics (e.g. \code{c(2000, 2005)} corresponding to the beginning and end of the change interval must ve provided when dowloading Forest Cover Change data).}
 
 \item{dir}{Character. Directory where to write the downloaded data.}
 
@@ -19,13 +21,15 @@ downloadPR(pr, year, dir, log = NULL,
 'downloadVCF.log' is created at the root of \code{dir}}
 
 \item{baseURL}{character.}
+
+\item{stubborn}{Numeric. Number of retries when for a reason or another the download fails}
 }
 \value{
 The list of file downloaded, plus eventual warning, or error
 messages
 }
 \description{
-Automates the download of Landsat based vcf products from the ftp server,
+Automates the download of Landsat based vcf products (Tree cover and tree cover change) from the ftp server,
 from a list of list of pathrows. Writes status of the download to a log file
 and recreates the directory organization of the ftp server locally.
 }
@@ -39,7 +43,7 @@ the same location earlier, the files overwrite previous downloaded files that ar
 pr <- getPR('Belize')
 pr
 dir = tempdir()
-downloadPR(pr, year=2000, dir=dir)
+downloadPR(pr, year=2000, name = 'TC', dir=dir)
 
 }
 }
