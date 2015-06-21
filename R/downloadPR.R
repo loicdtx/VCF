@@ -62,17 +62,17 @@ downloadPR <- function(pr, name = 'TC', year, dir, log=NULL, baseURL = 'ftp://ft
     # Build URL
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    year <- paste(year, collapse = '')
+    y <- paste(y, collapse = '')
     if(name == 'FCC') {
-      suffix <- '_CM'
+      suffix <- '_CM' # Jorn: do you know the difference between CP and CM? Should it be a function argument?
       prefix <- 'LandsatFCC'
     } else {
       suffix <- ''
       prefix <- 'LandsatTreecover'
     }
 
-    urlP <- sprintf('%s/WRS2/p%s/r%s/p%sr%s_%s_%d/', prefix, p, r, p, r, name, y) #Path part of the url
-    urlF <- sprintf('p%sr%s_%s_%d%s.tif.gz', p, r, name, y, suffix) # Filename part of the url
+    urlP <- sprintf('%s/WRS2/p%s/r%s/p%sr%s_%s_%s/', prefix, p, r, p, r, name, y) #Path part of the url
+    urlF <- sprintf('p%sr%s_%s_%s%s.tif.gz', p, r, name, y, suffix) # Filename part of the url
     url <- sprintf('%s%s%s', baseURL, urlP, urlF)
    
 
@@ -91,11 +91,10 @@ downloadPR <- function(pr, name = 'TC', year, dir, log=NULL, baseURL = 'ftp://ft
       size <- 0
       count <- 0
       a <- 1
-      while(count <= stubborn | (a == 0 & size != 0)) {
+      while(count <= stubborn & (a != 0 | size %in% c(0, NA))) {
         count = count + 1
         print(sprintf('Downloading %s, attempt number %d', url, count))
-        count <- 0
-        a <- download.file(url=url, destfile=filename)
+        a <- try(download.file(url=url, destfile=filename))
         size <- file.info(filename)$size
       }
         
