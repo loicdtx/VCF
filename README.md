@@ -12,3 +12,7 @@ News:
 
 1.4.0 (2015-01-20)
 - `getPR` now supports SP objects as location input
+
+1.5.0 (2015-06-21)
+- `downloadPR` supports download of forest cover change product 
+- `downloadPR` has an improved download handler
