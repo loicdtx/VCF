@@ -7,7 +7,7 @@
 #' 
 #' @param pr List or numeric list. Classically the returned object from
 #' \code{\link{getPR}}.
-#' @param year Numeric or list (i.e.: c(2000, 2005))
+#' @param year Numeric or list (i.e.: c(2000, 2005) or c(19902000, 20002005))
 #' @param searchDir character. Root directory of where the archive are stored
 #' @param dir character or \code{NULL}, if \code{NULL} (default), data are
 #' unpacked in the directories containing the archive. If a directory is
@@ -34,7 +34,6 @@
 #' 
 #' @import R.utils
 #' @import parallel
-#' 
 
 unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
   # pr is an object returned by getPR()
@@ -59,7 +58,14 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
+    if (year == 2000 | year == 2005){
+        gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
+    } else if (year == 19902000 | year == 20002005){
+        gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y)
+    } else {
+        stop(sprintf('%s is not a valid year range', year))
+    }
+    
     # Search recursively
     file <- list.files(path=searchDir, pattern=gz, full.names=TRUE, recursive=TRUE, include.dirs=FALSE)
     
