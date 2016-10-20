@@ -58,7 +58,7 @@ unpackVCF <- function(pr, year, searchDir, dir=NULL, mc.cores=1) {
     # Create filename
     p <- substr(x,1,3)
     r <- substr(x,4,6)
-    if (year == 2000 | year == 2005){
+    if (year == 2000 | year == 2005 | year == 2010 | year == 2015){
         gz <- sprintf('p%sr%s_TC_%d.tif.gz', p, r, y)
     } else if (year == 19902000 | year == 20002005){
         gz <- sprintf('p%sr%s_FCC_%d_CM.tif.gz', p, r, y)
