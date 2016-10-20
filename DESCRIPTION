@@ -1,8 +1,8 @@
 Package: VCF
 Type: Package
 Title: Utilities for working with the Landsat based tree cover data
-Version: 1.5.0
-Date: 2015-06-21
+Version: 1.6.0
+Date: 2016-10-20
 Authors@R: c(
     person("Dutrieux", "Loïc", email = "loic.dutrieux@gmail.com", role = c("aut", "cre")),
     person("Dallinga", "Jorn", ,role = "ctb")
@@ -29,3 +29,4 @@ Description: Package for easy handling of Landsat based VCF (Vegetation
     Continuous Fields) data. Includes utilities for querying Path Rows,
     automate downloading and pre-processing.
 License: GPL-3
+RoxygenNote: 5.0.1
